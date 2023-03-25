@@ -16,6 +16,20 @@ authController.createUserProfile = async (req, res) => {
                     message: "You must fill all the fields"
                 }
             );
+        }else if (!/.{8,}$/.test(password)){
+            return res.status(507).json(
+                {
+                    succes: false,
+                    message: "Your password must contain at least eight characters."
+                }
+            )
+        } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)){
+            return res.status(508).json(
+                {
+                    succes: false,
+                    message: "Your password must contain at least one letter and one number."
+                }
+            );
         };
 
         const newUser = await User.create(

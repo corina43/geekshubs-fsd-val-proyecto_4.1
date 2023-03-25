@@ -1,7 +1,7 @@
-const { User, Patient } = require('../models');
+const { User, Patient,Doctor } = require('../models');
 const bcrypt = require('bcrypt');
 
-
+const userController = {};
 
 userController.getAllUsers = async (req,res) => {
 
@@ -28,8 +28,6 @@ userController.getAllUsers = async (req,res) => {
     );
   }
 };
-
-const userController = {};
 
 userController.getUserProfile =  async (req, res) => {
     try {
@@ -82,7 +80,7 @@ userController.getUserProfile =  async (req, res) => {
     }
   };
 
-userController.updateUserProfile = async (req,res) => {
+userController.updateUserProfile = async (req, res) => {
   try {
 
     const { userName, password} = req.body;
@@ -145,4 +143,30 @@ userController.updateUserProfile = async (req,res) => {
   }
 };
 
+userController.getDoctorData = async (req, res) => {
+  try{
+    const userId = req.userId;
+
+    const doctors = await Doctor.findAll();
+
+    return res.json(
+      {
+        succes: true,
+        message: 'Doctors information',
+        data: doctors
+
+      }
+    );
+  } catch (error){
+
+    return res.status(500).json(
+      {
+        succes: true,
+        message: 'Something went wront',
+        data: error.message
+      }
+
+    );
+  }
+};
 module.exports = userController;
