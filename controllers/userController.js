@@ -1,6 +1,34 @@
 const { User, Patient } = require('../models');
 const bcrypt = require('bcrypt');
 
+
+
+userController.getAllUsers = async (req,res) => {
+
+  try {
+
+    const users = await User.findAll();
+
+    return res.json(
+      {
+        succes: true,
+        message: 'Doctors information',
+        data: users
+      }
+    );
+
+  } catch (error) {
+
+    return res.status(500).json(
+      { 
+        succes: false,
+        message: 'Something went wront.',
+        data: error.message 
+      }
+    );
+  }
+};
+
 const userController = {};
 
 userController.getUserProfile =  async (req, res) => {
