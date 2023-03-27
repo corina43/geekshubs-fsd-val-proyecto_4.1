@@ -5,32 +5,35 @@ const jwt = require('jsonwebtoken');
 
 authController.createUserProfile = async (req, res) => {
     try {
+        console.log("1");
         const { username, email, password } = req.body;
 
         const encryptedPassword = bcrypt.hashSync(password, 10);
 
-        if(username === "" || email === "" || password === ""){
-            return res.status(501).json(
-                {
-                    succes: false,
-                    message: "You must fill all the fields"
-                }
-            );
-        }else if (!/.{8,}$/.test(password)){
-            return res.status(507).json(
-                {
-                    succes: false,
-                    message: "Your password must contain at least eight characters."
-                }
-            )
-        } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)){
-            return res.status(508).json(
-                {
-                    succes: false,
-                    message: "Your password must contain at least one letter and one number."
-                }
-            );
-        };
+        // if(username === "" || email === "" || password === ""){
+        //     return res.status(501).json(
+        //         {
+        //             succes: false,
+        //             message: "You must fill all the fields"
+        //         }
+        //     );
+        // }else if (!/.{8,}$/.test(password)){
+        //     return res.status(507).json(
+        //         {
+        //             succes: false,
+        //             message: "Your password must contain at least eight characters."
+        //         }
+        //     )
+        // } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)){
+        //     return res.status(508).json(
+        //         {
+        //             succes: false,
+        //             message: "Your password must contain at least one letter and one number."
+        //         }
+        //     );
+        // };
+
+        console.log("2");
 
         const newUser = await User.create(
             {
@@ -41,6 +44,7 @@ authController.createUserProfile = async (req, res) => {
             }
         );
 
+        console.log("3");
         return res.json(
             {
             success: true,
