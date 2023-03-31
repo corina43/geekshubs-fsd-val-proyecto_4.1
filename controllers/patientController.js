@@ -1,4 +1,5 @@
 const { pathToFileURL } = require('url');
+
 const { User, Patient, Appointment, Doctor} = require('../models');
 
 const patientController = {};
@@ -93,15 +94,16 @@ patientController.getPatientInfo = async (req,res) => {
     };
 };
 patientController.getPatientAppointment = async (req,res) => {
+
     
-    try {
-        const patientId = req.userId
+    try {        
+        const patientId = req.userId;
 
         const patientAppointment = await Patient.findAll(
             {
                 where: 
                 {
-                    user_id: patientId
+                    id: patientId
                 },
                 include: {
                     model: Appointment,
@@ -123,7 +125,7 @@ patientController.getPatientAppointment = async (req,res) => {
 
         return res.json({
             succes: true,
-            message:'Póximas citas',
+            message:'Próximas citas',
             data: patientAppointment
         })
     } catch (error) {
